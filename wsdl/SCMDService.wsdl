@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://Ama.Authentication.Service/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="SCMDService" targetNamespace="http://Ama.Authentication.Service/">
+	<wsp:Policy wsu:Id="BasicHttpBinding_SCMDService_policy">
+		<wsp:ExactlyOne>
+			<wsp:All>
+				<http:BasicAuthentication xmlns:http="http://schemas.microsoft.com/ws/06/2004/policy/http"/>
+				<sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+					<wsp:Policy>
+						<sp:TransportToken>
+							<wsp:Policy>
+								<sp:HttpsToken RequireClientCertificate="false"/>
+							</wsp:Policy>
+						</sp:TransportToken>
+						<sp:AlgorithmSuite>
+							<wsp:Policy>
+								<sp:Basic256/>
+							</wsp:Policy>
+						</sp:AlgorithmSuite>
+						<sp:Layout>
+							<wsp:Policy>
+								<sp:Strict/>
+							</wsp:Policy>
+						</sp:Layout>
+					</wsp:Policy>
+				</sp:TransportBinding>
+			</wsp:All>
+		</wsp:ExactlyOne>
+	</wsp:Policy>
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://Ama.Authentication.Service/">
+			<xs:import namespace="http://schemas.datacontract.org/2004/07/Ama.Structures.CCMovelSignature"/>
+			<xs:element name="SCMDSign">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Ama.Structures.CCMovelSignature" minOccurs="0" name="request" nillable="true" type="q1:SignRequest"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SCMDSignResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Ama.Structures.CCMovelSignature" minOccurs="0" name="SCMDSignResult" nillable="true" type="q2:SignStatus"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="GetCertificate">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="applicationId" nillable="true" type="xs:base64Binary"/>
+						<xs:element minOccurs="0" name="userId" nillable="true" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="GetCertificateResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="GetCertificateResult" nillable="true" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="GetCertificateWithPin">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="applicationId" nillable="true" type="xs:base64Binary"/>
+						<xs:element minOccurs="0" name="userId" nillable="true" type="xs:string"/>
+						<xs:element minOccurs="0" name="pin" nillable="true" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="GetCertificateWithPinResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Ama.Structures.CCMovelSignature" minOccurs="0" name="GetCertificateWithPinResult" nillable="true" type="q3:SignStatus"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ValidateOtp">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="code" nillable="true" type="xs:string"/>
+						<xs:element minOccurs="0" name="processId" nillable="true" type="xs:string"/>
+						<xs:element minOccurs="0" name="applicationId" nillable="true" type="xs:base64Binary"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ValidateOtpResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Ama.Structures.CCMovelSignature" minOccurs="0" name="ValidateOtpResult" nillable="true" type="q4:SignResponse"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SCMDMultipleSign">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Ama.Structures.CCMovelSignature" minOccurs="0" name="request" nillable="true" type="q5:MultipleSignRequest"/>
+						<xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Ama.Structures.CCMovelSignature" minOccurs="0" name="documents" nillable="true" type="q6:ArrayOfHashStructure"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SCMDMultipleSignResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Ama.Structures.CCMovelSignature" minOccurs="0" name="SCMDMultipleSignResult" nillable="true" type="q7:SignStatus"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ForceSMS">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" name="processId" nillable="true" type="xs:string"/>
+						<xs:element minOccurs="0" name="citizenId" nillable="true" type="xs:string"/>
+						<xs:element minOccurs="0" name="applicationId" nillable="true" type="xs:base64Binary"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ForceSMSResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Ama.Structures.CCMovelSignature" minOccurs="0" name="ForceSMSResult" nillable="true" type="q8:SignStatus"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:schema>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/">
+			<xs:element name="anyType" nillable="true" type="xs:anyType"/>
+			<xs:element name="anyURI" nillable="true" type="xs:anyURI"/>
+			<xs:element name="base64Binary" nillable="true" type="xs:base64Binary"/>
+			<xs:element name="boolean" nillable="true" type="xs:boolean"/>
+			<xs:element name="byte" nillable="true" type="xs:byte"/>
+			<xs:element name="dateTime" nillable="true" type="xs:dateTime"/>
+			<xs:element name="decimal" nillable="true" type="xs:decimal"/>
+			<xs:element name="double" nillable="true" type="xs:double"/>
+			<xs:element name="float" nillable="true" type="xs:float"/>
+			<xs:element name="int" nillable="true" type="xs:int"/>
+			<xs:element name="long" nillable="true" type="xs:long"/>
+			<xs:element name="QName" nillable="true" type="xs:QName"/>
+			<xs:element name="short" nillable="true" type="xs:short"/>
+			<xs:element name="string" nillable="true" type="xs:string"/>
+			<xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte"/>
+			<xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt"/>
+			<xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong"/>
+			<xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort"/>
+			<xs:element name="char" nillable="true" type="tns:char"/>
+			<xs:simpleType name="char">
+				<xs:restriction base="xs:int"/>
+			</xs:simpleType>
+			<xs:element name="duration" nillable="true" type="tns:duration"/>
+			<xs:simpleType name="duration">
+				<xs:restriction base="xs:duration">
+					<xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?"/>
+					<xs:minInclusive value="-P10675199DT2H48M5.4775808S"/>
+					<xs:maxInclusive value="P10675199DT2H48M5.4775807S"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="guid" nillable="true" type="tns:guid"/>
+			<xs:simpleType name="guid">
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:attribute name="FactoryType" type="xs:QName"/>
+			<xs:attribute name="Id" type="xs:ID"/>
+			<xs:attribute name="Ref" type="xs:IDREF"/>
+		</xs:schema>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/Ama.Structures.CCMovelSignature" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Ama.Structures.CCMovelSignature">
+			<xs:complexType name="SignRequest">
+				<xs:sequence>
+					<xs:element name="ApplicationId" nillable="true" type="xs:base64Binary"/>
+					<xs:element minOccurs="0" name="DocName" nillable="true" type="xs:string"/>
+					<xs:element name="Hash" nillable="true" type="xs:base64Binary"/>
+					<xs:element name="Pin" nillable="true" type="xs:string"/>
+					<xs:element name="UserId" nillable="true" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="SignRequest" nillable="true" type="tns:SignRequest"/>
+			<xs:complexType name="SignStatus">
+				<xs:sequence>
+					<xs:element name="Code" nillable="true" type="xs:string"/>
+					<xs:element name="Field" nillable="true" type="xs:string"/>
+					<xs:element name="FieldValue" nillable="true" type="xs:string"/>
+					<xs:element name="Message" nillable="true" type="xs:string"/>
+					<xs:element name="ProcessId" nillable="true" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="SignStatus" nillable="true" type="tns:SignStatus"/>
+			<xs:complexType name="SignResponse">
+				<xs:sequence>
+					<xs:element name="ArrayOfHashStructure" nillable="true" type="tns:ArrayOfHashStructure"/>
+					<xs:element name="Signature" nillable="true" type="xs:base64Binary"/>
+					<xs:element name="Status" nillable="true" type="tns:SignStatus"/>
+					<xs:element name="certificate" nillable="true" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="SignResponse" nillable="true" type="tns:SignResponse"/>
+			<xs:complexType name="ArrayOfHashStructure">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="HashStructure" nillable="true" type="tns:HashStructure"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="ArrayOfHashStructure" nillable="true" type="tns:ArrayOfHashStructure"/>
+			<xs:complexType name="HashStructure">
+				<xs:sequence>
+					<xs:element name="Hash" nillable="true" type="xs:base64Binary"/>
+					<xs:element name="Name" nillable="true" type="xs:string"/>
+					<xs:element name="id" nillable="true" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="HashStructure" nillable="true" type="tns:HashStructure"/>
+			<xs:complexType name="MultipleSignRequest">
+				<xs:sequence>
+					<xs:element name="ApplicationId" nillable="true" type="xs:base64Binary"/>
+					<xs:element name="Pin" nillable="true" type="xs:string"/>
+					<xs:element name="UserId" nillable="true" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="MultipleSignRequest" nillable="true" type="tns:MultipleSignRequest"/>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="SCMDService_SCMDSign_InputMessage">
+		<wsdl:part name="parameters" element="tns:SCMDSign"/>
+	</wsdl:message>
+	<wsdl:message name="SCMDService_SCMDSign_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SCMDSignResponse"/>
+	</wsdl:message>
+	<wsdl:message name="SCMDService_GetCertificate_InputMessage">
+		<wsdl:part name="parameters" element="tns:GetCertificate"/>
+	</wsdl:message>
+	<wsdl:message name="SCMDService_GetCertificate_OutputMessage">
+		<wsdl:part name="parameters" element="tns:GetCertificateResponse"/>
+	</wsdl:message>
+	<wsdl:message name="SCMDService_GetCertificateWithPin_InputMessage">
+		<wsdl:part name="parameters" element="tns:GetCertificateWithPin"/>
+	</wsdl:message>
+	<wsdl:message name="SCMDService_GetCertificateWithPin_OutputMessage">
+		<wsdl:part name="parameters" element="tns:GetCertificateWithPinResponse"/>
+	</wsdl:message>
+	<wsdl:message name="SCMDService_ValidateOtp_InputMessage">
+		<wsdl:part name="parameters" element="tns:ValidateOtp"/>
+	</wsdl:message>
+	<wsdl:message name="SCMDService_ValidateOtp_OutputMessage">
+		<wsdl:part name="parameters" element="tns:ValidateOtpResponse"/>
+	</wsdl:message>
+	<wsdl:message name="SCMDService_SCMDMultipleSign_InputMessage">
+		<wsdl:part name="parameters" element="tns:SCMDMultipleSign"/>
+	</wsdl:message>
+	<wsdl:message name="SCMDService_SCMDMultipleSign_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SCMDMultipleSignResponse"/>
+	</wsdl:message>
+	<wsdl:message name="SCMDService_ForceSMS_InputMessage">
+		<wsdl:part name="parameters" element="tns:ForceSMS"/>
+	</wsdl:message>
+	<wsdl:message name="SCMDService_ForceSMS_OutputMessage">
+		<wsdl:part name="parameters" element="tns:ForceSMSResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="SCMDService">
+		<wsdl:operation name="SCMDSign">
+			<wsdl:input wsaw:Action="http://Ama.Authentication.Service/SCMDService/SCMDSign" message="tns:SCMDService_SCMDSign_InputMessage"/>
+			<wsdl:output wsaw:Action="http://Ama.Authentication.Service/SCMDService/SCMDSignResponse" message="tns:SCMDService_SCMDSign_OutputMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetCertificate">
+			<wsdl:input wsaw:Action="http://Ama.Authentication.Service/SCMDService/GetCertificate" message="tns:SCMDService_GetCertificate_InputMessage"/>
+			<wsdl:output wsaw:Action="http://Ama.Authentication.Service/SCMDService/GetCertificateResponse" message="tns:SCMDService_GetCertificate_OutputMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetCertificateWithPin">
+			<wsdl:input wsaw:Action="http://Ama.Authentication.Service/SCMDService/GetCertificateWithPin" message="tns:SCMDService_GetCertificateWithPin_InputMessage"/>
+			<wsdl:output wsaw:Action="http://Ama.Authentication.Service/SCMDService/GetCertificateWithPinResponse" message="tns:SCMDService_GetCertificateWithPin_OutputMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="ValidateOtp">
+			<wsdl:input wsaw:Action="http://Ama.Authentication.Service/SCMDService/ValidateOtp" message="tns:SCMDService_ValidateOtp_InputMessage"/>
+			<wsdl:output wsaw:Action="http://Ama.Authentication.Service/SCMDService/ValidateOtpResponse" message="tns:SCMDService_ValidateOtp_OutputMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="SCMDMultipleSign">
+			<wsdl:input wsaw:Action="http://Ama.Authentication.Service/SCMDService/SCMDMultipleSign" message="tns:SCMDService_SCMDMultipleSign_InputMessage"/>
+			<wsdl:output wsaw:Action="http://Ama.Authentication.Service/SCMDService/SCMDMultipleSignResponse" message="tns:SCMDService_SCMDMultipleSign_OutputMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="ForceSMS">
+			<wsdl:input wsaw:Action="http://Ama.Authentication.Service/SCMDService/ForceSMS" message="tns:SCMDService_ForceSMS_InputMessage"/>
+			<wsdl:output wsaw:Action="http://Ama.Authentication.Service/SCMDService/ForceSMSResponse" message="tns:SCMDService_ForceSMS_OutputMessage"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="BasicHttpBinding_SCMDService" type="tns:SCMDService">
+		<wsp:PolicyReference URI="#BasicHttpBinding_SCMDService_policy"/>
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="SCMDSign">
+			<soap:operation soapAction="http://Ama.Authentication.Service/SCMDService/SCMDSign" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetCertificate">
+			<soap:operation soapAction="http://Ama.Authentication.Service/SCMDService/GetCertificate" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetCertificateWithPin">
+			<soap:operation soapAction="http://Ama.Authentication.Service/SCMDService/GetCertificateWithPin" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ValidateOtp">
+			<soap:operation soapAction="http://Ama.Authentication.Service/SCMDService/ValidateOtp" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SCMDMultipleSign">
+			<soap:operation soapAction="http://Ama.Authentication.Service/SCMDService/SCMDMultipleSign" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ForceSMS">
+			<soap:operation soapAction="http://Ama.Authentication.Service/SCMDService/ForceSMS" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="SCMDService">
+		<wsdl:port name="BasicHttpBinding_SCMDService" binding="tns:BasicHttpBinding_SCMDService">
+			<soap:address location="https://preprod.cmd.autenticacao.gov.pt/Ama.Authentication.Frontend/SCMDService.svc"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
