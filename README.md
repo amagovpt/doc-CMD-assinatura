@@ -14,7 +14,7 @@ Este repositório contêm a documentação técnica relativamente ao Serviço de
 * Na pasta **wsdl** encontra-se a descrição do web service em formato xml.
 * Na pasta **guidelines** disponibiliza-se um documento que elenca as guidelines de integração necessárias para certificação da aplicação.
 * Na pasta **logotipos** estão disponíveis os logotipos para utilização mediante consulta prévia.
-* Na pasta **certificado** encontra-se o certificado que contem a chave pública a utilizar no processo de cifra dos elementos **número de telemóvel**, **PIN** e **OTP** conforme indicado no documento de especificação.
+* Na pasta **certificado** encontra-se o certificado que contém a chave pública a utilizar no processo de cifra dos elementos **número de telemóvel**, **PIN** e **OTP** conforme indicado no documento de especificação.
 * [Documento de especificação dos serviços de assinatura (download pdf)](https://amagovpt.github.io/doc-CMD-assinatura/AMA&#32;-&#32;CCMovel&#32;Especificação&#32;de&#32;Serviços&#32;Assinatura.pdf).
 
 
